@@ -34,13 +34,18 @@ def detect_scenes(img, result_path = None):
 	scenes = np.array(scenes)
 	
 	filtered_scenes = filter_same_scenes(scenes, ratio)
+	print('final_scene information! : ')
+	print('x, y, w, h of each scene : ')
 	print(filtered_scenes)
-	# 	cv2.rectangle(result,(x,y),(x+w, y+h),(0,255,0), 3) # green
-	# 	scenes.append([x, y, w, h])
-	# if result_path != None:
-	# 	cv2.imwrite(result_path, result)
-	# print(result_path+' : # of scenes = %d'%len(scenes))	
-	# return scenes
+
+	if result_path != None:
+		for i in range(len(filtered_scenes)):
+			x, y, w, h = filtered_scenes[i]
+			cv2.rectangle(result,(x,y),(x+w, y+h),(0,255,0), int(ratio)) # green
+
+		cv2.imwrite(result_path, result)
+		print(result_path+' : # of scenes = %d'%len(filtered_scenes))	
+	return filtered_scenes
 
 def filter_same_scenes(scenes, ratio):
 	
