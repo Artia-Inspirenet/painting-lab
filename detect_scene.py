@@ -82,12 +82,12 @@ def filter_same_scenes(scenes, ratio):
 		# break if there is no index in tmp_list, otherwise repeat it likely.
 	return scenes[ np.isin(index_list, filtered_scene_index)]
 
-def cropped_scenes(img, scenes):
-	cropped_scenes = []
-	for x, y, w, h in scenes:
-		cropped = transform.crop(img, (x,y), w, h)
-		cropped_scenes.append(cropped)
-	return cropped_scenes
+# def cropped_scenes(img, scenes):
+# 	cropped_scenes = []
+# 	for x, y, w, h in scenes:
+# 		cropped = transform.crop(img, (x,y), w, h)
+# 		cropped_scenes.append(cropped)
+# 	return cropped_scenes
 
 
 
