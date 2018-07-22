@@ -1,4 +1,6 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from http import HTTPStatus
+import os, shutil
 
 class S(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -8,7 +10,17 @@ class S(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers()
-        self.wfile.write(bytes("<html><body><h1>hi!</h1></body></html>", "utf-8"))
+        # self.wfile.write(bytes("<html><body><h1>hi!</h1></body></html>", "utf-8"))
+
+        try:
+            f = open(os.path.join(os.getcwd(),"index.html"), 'rb')
+        except OSError:
+            self.send_error(HTTPStatus.NOT_FOUND, "File not found")
+            return None
+
+        shutil.copyfileobj(f, self.wfile)
+
+        f.close()
 
     def do_HEAD(self):
         self._set_headers()
