@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render
 from django.views.generic import base
 
 from .forms import UploadForm
 
 class HomeView(base.TemplateView):
 
-    template_name = 'artia/home.html'
+    template_name = 'artia/base.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -16,7 +16,7 @@ def file_upload(request):
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect(reverse('artia:home'))
+            return redirect('home')
     else:
         form = UploadForm()
 
