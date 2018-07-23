@@ -1,7 +1,21 @@
 {% extends 'base.html' %}
 
-{% block home %}
+{% load static %}
 
-<h2>Home Sweet Home</h2>
+{% block title %}Home Sweet Home{% endblock %}
 
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">logout</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+<img src="{% static 'artia/Bart-and-Lisa-coloring-page.gif' %}">
+<br>
+{% endblock %}
+
+{% block footer %}
+<a href="{% url 'artia:scene_upload' %}">씬 올리기</a>
 {% endblock %}

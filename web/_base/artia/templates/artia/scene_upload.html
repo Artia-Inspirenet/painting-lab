@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
-{% block scene_upload %}
+{% block title %}씬 올리기{% endblock %}
 
+{% block content %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ scene_upload_form.as_p }}
+    {{ form.as_p }}
     <button type="submit">Upload</button>
   </form>
+{% endblock %}
 
-  <p><a href="{% url 'artia:home' %}">Return to home</a></p>
-
+{% block footer %}
+  <p><a href="{% url 'artia:home' %}">홈으로 돌아가기</a></p>
 {% endblock %}

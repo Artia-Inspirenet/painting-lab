@@ -1,14 +1,15 @@
     <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8">
+    <title>ArtiaWebTool</title>
+  </head>
   <body>
 
-    <h1>base.html</h1>
+    <h1>{% block title %}{% endblock %}</h1>
 
-    {% block home %}
-    {% endblock %}
-
-    {% block scene_upload %}
-    {% endblock %}
+    {% block content %}{% endblock %}
+    {% block footer %}{% endblock %}
 
   </body>
 </html>
