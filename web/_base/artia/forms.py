@@ -1,7 +1,7 @@
 from django import forms
-from .models import Upload
+from .models import SceneUpload
 
-class UploadForm(forms.ModelForm):
+class SceneUploadForm(forms.ModelForm):
     class Meta:
-        model = Upload
-        fields = ('description', 'file', )
+        model = SceneUpload
+        fields = ('scene', 'description', )
