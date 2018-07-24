@@ -17,16 +17,17 @@ def scene_upload(request):
         if request.user.is_authenticated:
             form = SceneUploadForm(request.POST, request.FILES)
             if form.is_valid():
-                form = SceneUpload(scene_img = request.FILES['scene_img'])
-                form.uploaded_by = request.user
-                form.save()
+                scene = SceneUpload(scene_img = request.FILES['scene_img'])
+                scene.uploaded_by = request.user
+                scene.scene_img.upload_to = 'scene/%s' % request.user.username
+                scene.save()
     #            return redirect(reverse('artia:home'))
                 return render(request, 'artia/scene_step_1.html')
         else :
             form = SceneUploadAnonymousForm(request.POST, request.FILES)
             if form.is_valid():
-                form = SceneUploadAnonymous(scene_img = request.FILES['scene_img'])
-                form.save()
+                scene = SceneUploadAnonymous(scene_img = request.FILES['scene_img'])
+                scene.save()
     #            return redirect(reverse('artia:home'))
                 return render(request, 'artia/scene_step_1.html')
     else:
