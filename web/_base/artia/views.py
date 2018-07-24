@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import base
 
-from .models import SceneUpload
-from .forms import SceneUploadForm
+from .models import SceneUpload, SceneUploadAnonymous
+from .forms import SceneUploadForm, SceneUploadAnonymousForm
 
 class HomeView(base.TemplateView):
 
@@ -14,15 +14,26 @@ class HomeView(base.TemplateView):
 
 def scene_upload(request):
     if request.method == 'POST':
-        form = SceneUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            form = SceneUpload(scene_img = request.FILES['scene_img'])
-            form.uploaded_by = request.user
-            form.save()
-#            return redirect(reverse('artia:home'))
-            return render(request, 'artia/scene_step_1.html')
+        if request.user.is_authenticated:
+            form = SceneUploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                form = SceneUpload(scene_img = request.FILES['scene_img'])
+                form.uploaded_by = request.user
+                form.save()
+    #            return redirect(reverse('artia:home'))
+                return render(request, 'artia/scene_step_1.html')
+        else :
+            form = SceneUploadAnonymousForm(request.POST, request.FILES)
+            if form.is_valid():
+                form = SceneUploadAnonymous(scene_img = request.FILES['scene_img'])
+                form.save()
+    #            return redirect(reverse('artia:home'))
+                return render(request, 'artia/scene_step_1.html')
     else:
-        form = SceneUploadForm()
+        if request.user.is_authenticated:
+            form = SceneUploadForm()
+        else :
+            form = SceneUploadAnonymousForm()
 
     context = {
         'form': form

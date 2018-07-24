@@ -6,3 +6,8 @@ class SceneUpload(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     scene_img = models.FileField(upload_to='scene')
     description = models.CharField(max_length=255, blank=True)
+
+class SceneUploadAnonymous(models.Model):
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    scene_img = models.FileField(upload_to='scene/anonymous')
+    description = models.CharField(max_length=255, blank=True)
