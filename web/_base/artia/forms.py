@@ -4,4 +4,4 @@ from .models import SceneUpload
 class SceneUploadForm(forms.ModelForm):
     class Meta:
         model = SceneUpload
-        fields = ('scene', 'description', )
+        fields = ('scene_img', 'description', )

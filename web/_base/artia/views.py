@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import base
 
+from .models import SceneUpload
 from .forms import SceneUploadForm
 
 class HomeView(base.TemplateView):
@@ -15,6 +16,8 @@ def scene_upload(request):
     if request.method == 'POST':
         form = SceneUploadForm(request.POST, request.FILES)
         if form.is_valid():
+            form = SceneUpload(scene_img = request.FILES['scene_img'])
+            form.uploaded_by = request.user
             form.save()
 #            return redirect(reverse('artia:home'))
             return render(request, 'artia/scene_step_1.html')
