@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import base
+from django.views.generic.list import ListView
 
 from .models import SceneUpload, SceneUploadAnonymous
 from .forms import SceneUploadForm, SceneUploadAnonymousForm
@@ -11,6 +12,9 @@ class HomeView(base.TemplateView):
 #    def get_context_data(self, **kwargs):
 #        context = super().get_context_data(**kwargs)
 #        return context
+class SceneListView(ListView):
+
+    pass
 
 def scene_upload(request):
     if request.method == 'POST':
@@ -19,7 +23,6 @@ def scene_upload(request):
             if form.is_valid():
                 scene = SceneUpload(scene_img = request.FILES['scene_img'])
                 scene.uploaded_by = request.user
-                scene.scene_img.upload_to = 'scene/%s' % request.user.username
                 scene.save()
     #            return redirect(reverse('artia:home'))
                 return render(request, 'artia/scene_step_1.html')
