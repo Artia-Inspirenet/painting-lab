@@ -3,7 +3,7 @@ from psd_tools import PSDImage
 from PIL import Image
 import cv2
 from lib.image_processing import transform
-import detect_scene as ds
+import detect_frames as ds
 import sys
 import pickle
 import numpy as np
@@ -188,7 +188,7 @@ def load_psd():
 
             		img = cv2.imread(backcolor_frame_saved_img)[:,:,::-1]
             		detected_backcolor_frame = result_dir + '/detected_backcolor_frame.png'
-            		cut_point_list = ds.detect_scenes(img, detected_backcolor_frame)
+            		cut_point_list = ds.detect_frames(img, detected_backcolor_frame)
 
             		
 
