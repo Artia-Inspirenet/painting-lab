@@ -12,26 +12,25 @@ fi
 if [ $# != 0 ]
   then
     . `which virtualenvwrapper.sh`
-    mkvirtualenv $1
+    mkvirtualenv $1 -p python3
 fi
 
 # Install Pypi required
-pip install --user -r requirement.txt
+pip3 install -r requirement.txt
 
 # Make project's DB
-python manage.py migrate
+python3 manage.py migrate
 
 # Make app's DB-making python script - now app is artia
-python manage.py makemigrations
+python3 manage.py makemigrations
 
 # Apply script just made. This will add table for artia's model
-python manage.py migrate
+python3 manage.py migrate
 
 # Make superuser for web-tool
 pass = `cat superuserpass.txt`
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', '', '$pass')" | python manage.py shell
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', '', '$pass')" | python3 manage.py shell
 
 # Run server
-python manage.py runserver
-
+python3 manage.py runserver
 
