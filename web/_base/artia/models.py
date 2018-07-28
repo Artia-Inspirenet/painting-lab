@@ -1,14 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Parameter's name, like 'instance', 'filename' is defined @ Django Document 2.0.
-# Do not rename these.
-def scene_save_path(instance, filename):
+def scene_save_path(who, what):
     try :
-        save_path = 'scene/{}/{}'.format(instance.uploaded_by.username, filename)
+        save_path = 'scene/{}/{}'.format(who.uploaded_by.username, what)
 
     except AttributeError:
-        save_path = 'scene/{}/{}'.format('anonymous', filename)
+        save_path = 'scene/{}/{}'.format('anonymous', what)
 
     return save_path
 
