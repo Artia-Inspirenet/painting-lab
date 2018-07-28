@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}씬 올리기{% endblock %}
+{% block title %}씬들{% endblock %}
 
 {% block content %}
 
   {% if scene_list %}
     <ul>
-      {% for scene in scene_list %}
-        <li><a href="{{ scene.scene_img.url }}">{{ scene.scene_img.name }}</a></li>
+      {% for each_scene in scene_list %}
+        <li><a href="{{ each_scene.scene_img.url }}">{{ each_scene.scene_img.name }}</a></li>
       {% endfor %}
     </ul>
   {% else %}

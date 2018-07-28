@@ -29,7 +29,7 @@ python3 manage.py migrate
 
 # Make superuser for web-tool
 pass = `cat superuserpass.txt`
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', '', '$pass')" | python3 manage.py shell
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', '', 'artiaisthebest')" | python3 manage.py shell
 
 # Run server
 python3 manage.py runserver
