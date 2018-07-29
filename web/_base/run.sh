@@ -28,9 +28,9 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 
 # Make superuser for web-tool
-pass = `cat superuserpass.txt`
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', '', 'artiaisthebest')" | python3 manage.py shell
+PASS=`cat superuserpass.txt`
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', '', '$PASS')" | python3 manage.py shell
 
-# Run server
+# Run dev-server
 python3 manage.py runserver
 
