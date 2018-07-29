@@ -32,10 +32,13 @@ def scene_upload(request):
         form = SceneUploadForm(request.POST, request.FILES)
 
         if form.is_valid():
-            scene = SceneUpload(scene_img = request.FILES['scene_img'])
-            if request.user.is_authenticated:
-                scene.uploaded_by = request.user
-            scene.save()
+#            scenes = SceneUpload(scene_img = request.FILES.getlist('scene_img'))
+            scenes = request.FILES.getlist('scene_img')
+            for s in scenes:
+                scene = SceneUpload(scene_img = s)
+                if request.user.is_authenticated:
+                    scene.uploaded_by = request.user
+                scene.save()
             return redirect('artia:scene-list')
 
     else:
