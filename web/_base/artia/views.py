@@ -21,11 +21,15 @@ class SceneListView(ListView):
 
     def get_queryset(self):
 
-        if self.request.user.is_authenticated:
+        if self.request.user.is_superuser:
+            return Scene.objects.all()
+
+        elif self.request.user.is_authenticated:
             return Scene.objects.filter(whose__username=self.request.user.username)
 
-        else:
+        elif self.request.user.is_anonymous:
             return Scene.objects.exclude(whose__isnull=False)
+
 
 class CutListView(ListView):
 
@@ -36,11 +40,16 @@ class CutListView(ListView):
 
     def get_queryset(self):
 
-        if self.request.user.is_authenticated:
+        if self.request.user.is_superuser:
+            return Cut.objects.all()
+
+        elif self.request.user.is_authenticated:
             return Cut.objects.filter(whose__username=self.request.user.username)
 
-        else:
+        elif self.request.user.is_anonymous:
             return Cut.objects.exclude(whose__isnull=False)
+
+
 
 #    def get_context_data(self, **kwargs):
 #        context = super().get_context_data(**kwargs)
@@ -96,10 +105,22 @@ def cut_instance(request, id=None):
 
     if request.method == 'POST':
         coordinates = request.POST['coordinates']
-        for coordinate in json.loads(coordinates):
-            print(json.dumps(coordinate, indent=4))
 
-        return HttpResponse("<div>Seccess</div>")
+        # DB part.
+
+        # First, load Cut model's item based on primary key(or id, instead)
+        cut = Cut.objects.get(pk=id)
+
+        # Second, save coordinates on memory just received(not DB, yet).
+        cut.coordinates = coordinates
+
+        # Third, update DB
+        cut.save()
+
+        # Reload Cut model just saved.
+        cut.refresh_from_db()
+
+        return HttpResponse(cut.coordinates)
 
 
         #Save added coordinates to DB
