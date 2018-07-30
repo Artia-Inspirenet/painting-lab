@@ -90,12 +90,12 @@
 
 
   $('#save-instance').click(function(event) {
-    // You gotta include the csrf_token in your post data
+  // You gotta include the csrf_token in your post data
   event.preventDefault();
     $.ajax({
       type: 'POST',
       url: '{% url 'artia:cut-instance' pk %}',
-      data: {'coordinates': 'sdfsdfsdf', 'csrfmiddlewaretoken': csrftoken},
+      data: {'coordinates': JSON.stringify(points), 'csrfmiddlewaretoken': csrftoken},
       success: function (data, textStatus) {
           //alert(data, textStatus);
           $('#output').html(data); // append to inner html

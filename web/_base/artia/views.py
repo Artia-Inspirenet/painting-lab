@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse
 from django.views.generic import base
 from django.views.generic.list import ListView
+import json
+#from django.core.serializers.json import DjangoJSONEncoder as json
 
 from .models import Scene, Cut
 from .forms import SceneForm, CutForm
@@ -40,11 +42,9 @@ class CutListView(ListView):
         else:
             return Cut.objects.exclude(whose__isnull=False)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-#        for cut in context['cut_list']:
-#            cut.cut_img.url = '/cut/instance' + cut.cut_img.url
-        return context
+#    def get_context_data(self, **kwargs):
+#        context = super().get_context_data(**kwargs)
+#        return context
 
 def scene_upload(request):
     if request.method == 'POST':
@@ -91,27 +91,13 @@ def cut_upload(request):
     }
 
     return render(request, 'artia/cut_upload.html', context)
-#def scene_cut(request):
-#
-#    if request.method == 'POST':
-#        # If request methed is POST, this occurs only when user try to change
-#        # each frame's size.
-#
-#        pass
-#
-#    # If request method is GET, just like normal access,
-#    # then web page showing image how it would be cut.
-#    # This request is only occured when user access through scene list page.
-#    context = {'scene':
-#    return render(request, 'artia/scene_cut.html', context)
 
 def cut_instance(request, id=None):
 
     if request.method == 'POST':
         coordinates = request.POST['coordinates']
-        print(coordinates)
-        for coordinate in coordinates:
-            print(coordinate)
+        for coordinate in json.loads(coordinates):
+            print(json.dumps(coordinate, indent=4))
 
         return HttpResponse("<div>Seccess</div>")
 
