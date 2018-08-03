@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}씬들{% endblock %}
+
+{% block content %}
+
+  {% if scene_list %}
+    <ul>
+      {% for each_scene in scene_list %}
+        <li><a href="{{ each_scene.scene_img.url }}">{{ each_scene.scene_img.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No scene uploaded.</p>
+  {% endif %}
+
+{% endblock %}
+
+{% block footer %}
+  <p><a href="{% url 'artia:home' %}">홈으로</a></p>
+{% endblock %}

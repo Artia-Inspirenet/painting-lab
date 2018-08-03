@@ -1,3 +1,4 @@
+import cv2
 import os
 from psd_tools import PSDImage
 from PIL import Image

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}컷 자르기{% endblock %}
+
+{% block content %}
+
+<img id="cut" src="{{cut.url}}">
+
+{% endblock %}
+
+{% block footer %}
+  <p><a href="{% url 'artia:home' %}">홈으로</a></p>
+{% endblock %}
