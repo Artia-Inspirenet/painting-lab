@@ -26,7 +26,7 @@ function mkvir () {
 function setenv () {
 
     echo "${bd}### Install required python packages${nm}"
-    pip3 install -r requirement.txt
+    pip3 install -r requirements.txt
 
     echo "${bd}### Basic default project's DB migrations${nm}"
     python3 manage.py migrate

@@ -6,12 +6,13 @@
     <title>psd.js image example</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'webapp/css/style.css' %}">
-    <script type="text/javascript" src="{% static 'webapp/js/psd.min.js' %}"></script>
+    <script src="{% static 'webapp/js/psd.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
 
   </head>
   <body>
-    <div id="dropzone">
-      <input type="file" multiple style="display:none" id="upload-files">
+    <div >
+      <input type="file" multiple style="display:none" id="dropzone">
       <p>Drop here</p>
     </div>
 

@@ -1,26 +1,13 @@
-//(function () {
-  var PSD = require('psd');
-//
-  document.getElementById('dropzone').addEventListener('dragover', onDragOver, true);
-  document.getElementById('dropzone').addEventListener('drop', onDrop, true);
-//
-  function onDragOver(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-  }
-//
-//  function onDrop(e) {
-//    e.stopPropagation();
-//    e.preventDefault();
-//
-//    PSD.fromEvent(e).then(function (psd) {
-//      var data = JSON.stringify(psd.tree().export(), undefined, 2);
-//      document.getElementById('data').innerHTML = data;
-//      document.getElementById('image').appendChild(psd.image.toPng());
-//    });
-//  }
-//}());
+var PSD = require('psd');
+
+document.getElementById('dropzone').addEventListener('dragover', onDragOver, true);
+document.getElementById('dropzone').addEventListener('drop', onDrop, true);
+
+function onDragOver(evt) {
+  evt.stopPropagation();
+  evt.preventDefault();
+  evt.dataTransfer.dropEffect = 'copy';
+}
 
 function onDrop(evt) {
   evt.stopPropagation();
@@ -30,4 +17,17 @@ function onDrop(evt) {
   });
 }
 
+var formData = new FormData();
+formData.append('file', $('#file')[0].files[0]);
 
+$.ajax({
+  url : 'api/',
+  type : 'POST',
+  data : formData,
+  processData: false,  // tell jQuery not to process the data
+  contentType: false,  // tell jQuery not to set contentType
+  success : function(data) {
+    console.log(data);
+    alert(data);
+  }
+});
