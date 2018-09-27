@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Home Sweet Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">logout</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+<br>
+<img src="{% static 'artia/Bart-and-Lisa-coloring-page.gif' %}">
+<br>
+{% endblock %}
+
+{% block footer %}
+<!--
+<a href="{% url 'artia:scene-upload' %}">씬 올리기</a><br>
+-->
+<a href="{% url 'artia:cut-upload' %}">컷 올리기</a><br>
+<a href="{% url 'artia:cut-list' %}">컷 리스트</a><br>
+{% endblock %}
