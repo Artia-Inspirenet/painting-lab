@@ -1,0 +1,3 @@
+[submodule "painting-lab-web"]
+	path = painting-lab-web
+	url = https://github.com/Rockheung/painting-lab-web.git
