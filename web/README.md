@@ -1,15 +1,30 @@
-Changed for public service ***webapp***, artia app is deprecated.
+# webapp
 
-## Possible bash commmand
+> A Vue.js project
 
-`$ bash run.sh`: Same as `python manage.py runserver`
+## Build Setup
 
-`$ bash run.sh install`: Install PyPI specified in **requirements.txt**
+``` bash
+# install dependencies
+npm install
 
-`$ bash run.sh install $VIRTUALENV_NAME`: Make virtualenv named *VIRTUALENV_NAME* automatically, and install PyPI specified in requirements.txt like above. Require **virtualenvwrapper**
+# serve with hot reload at localhost:8080
+npm run dev
 
-`$ bash run.sh clean`: Remove SQL query made by command *makemigrations* and DB file if exists.
+# build for production with minification
+npm run build
 
-## requirement
+# build for production and view the bundle analyzer report
+npm run build --report
 
-Check out `requirements.txt`
+# run unit tests
+npm run unit
+
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
+```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

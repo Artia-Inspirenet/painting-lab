@@ -8,7 +8,7 @@ from .serializers import UserSerializer, GroupSerializer, PSDFileUploadSerialize
 
 
 def home(request):
-    return render(request, 'webapp/home.html')
+    return render(request, 'templates/index.html')
 
 
 class UserViewSet(ModelViewSet):

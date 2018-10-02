@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 from rest_framework import routers
 
 from webapp import views
@@ -16,10 +17,11 @@ router.register(r'uploads', views.PSDFileUploadViewSet)
 # Additionally, we include login URLs for the browsable API.
 
 urlpatterns = [
-    path('', include('webapp.urls')),
+    url(r'^$', TemplateView.as_view(template_name='webapp/home.html'), name='home'),
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
+    #path('', include('webapp.urls')),
     #path('auth/', include('django.contrib.auth.urls')),
 ]
 

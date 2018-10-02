@@ -5,7 +5,7 @@ nm=$(tput sgr0)
 function clean () {
     echo "${bd}### Cleaning all these stuff including DB${nm}"
     rm db.sqlite3
-    rm -rf uploads
+    find uploads/. ! -type f -name '.gitkeep' -exec rm {} \;
     find webapp/migrations/. ! -type f -name '__init__.py' -exec rm {} \;
 }
 
@@ -49,6 +49,13 @@ function setpswd () {
 
 }
 
+function vueinit (){
+
+    echo "${bd}### Install required npm_modules${nm}"
+    npm install
+
+}
+
 if [ $1 == "clean" ]; then
     clean
     exit 1
@@ -59,6 +66,10 @@ elif [ $1 == "install" ]; then
     mkvir
     setenv
     setpswd
+
+elif [ $1 == "npmi" ]; then
+
+    vueinit
 
 fi
 
