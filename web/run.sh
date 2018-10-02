@@ -5,7 +5,7 @@ nm=$(tput sgr0)
 function clean () {
     echo "${bd}### Cleaning all these stuff including DB${nm}"
     rm db.sqlite3
-    find artia/migrations/. ! -type f -name '__init__.py' -exec rm {} \;
+    rm -rf uploads
     find webapp/migrations/. ! -type f -name '__init__.py' -exec rm {} \;
 }
 
