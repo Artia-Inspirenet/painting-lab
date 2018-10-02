@@ -1,9 +1,10 @@
 #!/bin/bash
 bd=$(tput bold)
 nm=$(tput sgr0)
+
 # Make isolated python-virtualenv things if you wnat.
 function clean () {
-    echo "${bd}### Cleaning all these stuff including DB${nm}"
+    echo "${bd}### Cleaning all these stuff including sqlite DB${nm}"
     rm db.sqlite3
     find uploads/. ! -type f -name '.gitkeep' -exec rm {} \;
     find webapp/migrations/. ! -type f -name '__init__.py' -exec rm {} \;
@@ -31,10 +32,10 @@ function setenv () {
     echo "${bd}### Basic default project's DB migrations${nm}"
     python3 manage.py migrate
 
-    echo "${bd}### Make app's DB-making python script - now app is artia${nm}"
+    echo "${bd}### Make app's DB-querying python script - now app is webapp${nm}"
     python3 manage.py makemigrations
 
-    echo "${bd}### Apply script just made. This will add table for artia's model${nm}"
+    echo "${bd}### Apply script above. This will add table for webapp's model${nm}"
     python3 manage.py migrate
 
 }
@@ -56,18 +57,18 @@ function vueinit (){
 
 }
 
-if [ $1 == "clean" ]; then
+if [ $1 = "clean" ]; then
     clean
     exit 1
 
-elif [ $1 == "install" ]; then
+elif [ $1 = "install" ]; then
 
     clean
     mkvir
     setenv
     setpswd
 
-elif [ $1 == "npmi" ]; then
+elif [ $1 = "npmi" ]; then
 
     vueinit
 

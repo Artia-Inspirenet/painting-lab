@@ -8,7 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+# build/ conflict occurs with vuejs webpack
 develop-eggs/
 dist/
 downloads/
