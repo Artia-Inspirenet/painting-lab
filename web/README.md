@@ -1,4 +1,26 @@
-# webapp
+Changed for public service ***webapp***, artia app is deprecated.
+
+# django - backend
+
+## Possible bash commmand
+
+`$ bash run.sh`: Same as `python manage.py runserver`
+
+`$ bash run.sh install`: Install PyPI specified in **requirements.txt**
+
+`$ bash run.sh install $VIRTUALENV_NAME`: Make virtualenv named *VIRTUALENV_NAME* automatically, and install PyPI specified in requirements.txt like above. Require **virtualenvwrapper**
+
+`$ bash run.sh clean`: Remove SQL query made by command *makemigrations* and DB file if exists.
+
+`$ bash run.sh npmi`: Install npm library for developing vuejs
+
+## requirement
+
+Check out `requirements.txt`
+
+# Vue.js - frontend
+
+Vue.js based webpack auto-generated README.md
 
 > A Vue.js project
 
