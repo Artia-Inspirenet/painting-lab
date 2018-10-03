@@ -8,6 +8,11 @@ yarn-error.log*
 /test/e2e/reports/
 selenium-debug.log
 
+# conflict stuff
+webpack-stats.json
+public/
+dist/
+
 # Editor directories and files
 .idea
 .vscode
