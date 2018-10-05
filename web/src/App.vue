@@ -1,14 +1,39 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+      <!--
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Artia Web App"/>
+      -->
+    <PSDFileUpload token=""/>
   </div>
 </template>
 
 <script>
+import PSDFileUpload from './components/PSDFileUpload.vue'
+
 export default {
-  name: 'App'
+  name: 'app',
+  components: {
+    PSDFileUpload
+  }
 }
+
+// let csrftoken = Cookies.get('csrftoken');
+// 
+// 
+// const csrfSafeMethod = method => {
+//   // these HTTP methods do not require CSRF protection
+//   return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+// }
+// 
+// $.ajaxSetup({
+//   beforeSend: function (xhr, settings) {
+//     console.log(this);
+//     if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+//       xhr.setRequestHeader("X-CSRFToken", csrftoken);
+//     };
+//   }
+// });
 </script>
 
 <style>
