@@ -1,5 +1,6 @@
 const path = require('path')
-const BundleTracker  = require('webpack-bundle-tracker');
+const BundleTracker  = require('webpack-bundle-tracker')
+const jQuery = require('jquery')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
