@@ -1,7 +1,7 @@
 <template>
-  <div class="example-drag">
+  <div class="drag">
     <div class="upload">
-      <ul v-if="files.length">
+      <ul class="p-5" v-if="files.length">
         <li v-for="file in files" :key="file.id">
           <span>{{file.name}}</span> -
           <span>{{file.size | formatSize}}</span> -
@@ -13,19 +13,17 @@
         </li>
       </ul>
       <ul v-else>
-        <td colspan="7">
-          <div class="text-center p-5">
-            <h4>Drop files anywhere to upload<br/>or</h4>
-            <label for="file" class="btn btn-lg btn-primary">Select Files</label>
-          </div>
-        </td>
+        <div class="text-center p-5"
+          v-if="$refs.upload && $refs.upload.dropActive">
+          <h4>Ya! Drop them!</h4>
+        </div>
+        <div class="text-center p-5"
+          v-else>
+          <h4>Drag files here!</h4>
+        </div>
       </ul>
 
-      <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
-        <h3>Drop files to upload</h3>
-      </div>
-
-      <div class="example-btn">
+      <div class="btn">
         <file-upload
           class="btn btn-primary"
           post-action="api/uploads/"
@@ -39,11 +37,16 @@
           <i class="fa fa-plus"></i>
           Select files
         </file-upload>
-        <button type="button" class="btn btn-success" v-if="!$refs.upload || !$refs.upload.active" @click.prevent="$refs.upload.active = true">
+        <button
+          class="btn btn-success"
+          v-if="!$refs.upload || !$refs.upload.active"
+          @click.prevent="$refs.upload.active = true">
           <i class="fa fa-arrow-up" aria-hidden="true"></i>
           Start Upload
         </button>
-        <button type="button" class="btn btn-danger"  v-else @click.prevent="$refs.upload.active = false">
+        <button
+          class="btn btn-danger"
+          v-else @click.prevent="$refs.upload.active = false">
           <i class="fa fa-stop" aria-hidden="true"></i>
           Stop Upload
         </button>
@@ -75,13 +78,13 @@ export default {
 </script>
 
 <style scoped>
-.example-drag label.btn {
-  margin-bottom: 0;
-  margin-right: 1rem;
+.drag .btn {
+  margin: 1rem;
 }
 
+/*
 
-.example-drag .drop-active {
+.drag .drop-active {
   top: 0;
   bottom: 0;
   right: 0;
@@ -93,7 +96,7 @@ export default {
   background: #000;
 }
 
-.example-drag .drop-active h3 {
+.drag .drop-active h3 {
   margin: -.5em 0 0;
   position: absolute;
   top: 50%;
@@ -106,4 +109,5 @@ export default {
   color: #fff;
   padding: 0;
 }
+*/
 </style>

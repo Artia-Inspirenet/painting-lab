@@ -129,6 +129,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 LOGIN_REDIRECT_URL = 'webapp:home'
 LOGOUT_REDIRECT_URL = 'webapp:home'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+
 # modified for vue.js
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'dist'),
