@@ -1,15 +1,14 @@
 <template>
-  <div id="app" >
-    <p>Your CSRFToken: {{ token }}</p>
+  <div id="app">
+    <h1>Artia Wepapp</h1>
     <!--
+    <p>Your CSRFToken: {{ token }}</p>
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Artia Web App"/>
-    <PSDFileUpload token=""/>
-    -->
     <div
+      class="drop-zone"
       @dragover.stop.prevent="onDragOver"
       @drop.stop.prevent="onDrop">
-    <!--
       <input
         id="file-send"
         type="button"
@@ -17,19 +16,23 @@
         autocomplate="off"
         data-loading-text="jquery with bootstrap"
         value="sdfsdf"/>
-    -->
       <p>Drop Files Here!</p>
     </div>
+    -->
+    <PsdFileUpload
+      class="psd-file-upload"
+      :csrf-tk=token />
   </div>
 </template>
 
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
-//import PSDFileUpload from './components/PSDFileUpload.vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import jQuery from 'jquery'
 import Cookies from 'js-cookie'
+
+import PsdFileUpload from './components/PsdFileUpload.vue'
 
 let csrftoken = Cookies.get('csrftoken');
 let formData = new FormData();
@@ -57,7 +60,7 @@ export default {
   },
   components: {
     //HelloWorld
-    //PSDFileUpload
+    PsdFileUpload
   },
   methods: {
 
@@ -96,7 +99,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -106,14 +109,19 @@ export default {
   margin-top: 60px;
 }
 
-div div {
-  width: 500px;
+div div.drop-zone {
+  width: 100%;
   height: 100px;
   border: 1px #ababab dashed;
   margin: 50px auto;
 }
 
-div div p {
+div div.psd-file-upload {
+  border: 1px #ababab dashed;
+  margin: 50px auto;
+}
+
+div div.drop-zone p {
   text-align: center;
   line-height: 100px;
   margin: 0;

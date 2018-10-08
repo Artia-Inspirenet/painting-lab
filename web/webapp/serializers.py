@@ -18,7 +18,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class PSDFileUploadSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PSDFile
-        fields = ('uploaded', 'user', 'datafile', 'w', 'h')
+        fields = ('uploaded', 'user', 'datafile')
 
     user = serializers.SlugRelatedField(
         read_only=True,
