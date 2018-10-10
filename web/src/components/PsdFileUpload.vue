@@ -43,7 +43,7 @@
           class="btn btn-primary"
           post-action="api/uploads/"
           :headers="{'X-CSRFToken': this.csrfTk }"
-          :data="{work:'sdfsdf',episode:'sdfsdf'}"
+          :data="{ 'work_title': info.work.title, 'work_detail': info.work.detail, 'episode': info.episode.title }"
           :multiple="true"
           :drop="true"
           :drop-directory="true"

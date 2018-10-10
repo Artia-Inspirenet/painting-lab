@@ -3,18 +3,6 @@ from rest_framework import serializers
 from .models import PSDFile, Work, Episode
 
 
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('url', 'username', 'email', 'groups')
-# 
-# 
-# class GroupSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Group
-#         fields = ('url', 'name')
-
-
 class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
@@ -24,15 +12,16 @@ class WorkSerializer(serializers.ModelSerializer):
 class EpisodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Episode
-        fields = ('title')
+        fields = ('title',)
 
 
-class PSDFileUploadSerializer(serializers.ModelSerializer):
+class PSDFileUploadSerializer(serializers.Serializer):
     user = serializers.SlugRelatedField(
         read_only=True,
         slug_field='username')
-    work = WorkSerializer()
-    episode = EpisodeSerializer()
+    work_title = serializers.CharField()
+    work_detail = serializers.CharField()
+    episode = serializers.CharField()
     #work = serializers.SlugRelatedField(
     #    queryset=Work.objects.all(),
     #    slug_field='id')
@@ -42,19 +31,25 @@ class PSDFileUploadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PSDFile
-        fields = ('uploaded', 'user', 'datafile', 'work', 'episode')
+        fields = ('uploaded', 'user', 'datafile', 'work_title', 'work_detail', 'episode')
 
     def create(self, validated_data):
-        user_data = validated_data['user']
-        work_data = validated_data['work']
-        episode_data = validated_data['episode']
+        validated_data.pop('work')
+        user_data = validated_data.pop('user')
+        work_title = validated_data.pop('work_title')
+        work_detail = validated_data.pop('work_detail')
+        episode_data = validated_data.pop('episode')
 
         new_work = Work.objects.create(user=user_data,
-                                       **work_data)
+                                       title=work_title,
+                                       detail=work_detail)
         new_episode = Episode.objects.create(user=user_data,
                                              work=new_work,
-                                             **episode_data)
-        psdfile = PSDFile.objects.create(**validated_data)
+                                             title=episode_data)
+        psdfile = PSDFile.objects.create(user=user_data,
+                                         work=new_work,
+                                         episode=new_episode,
+                                         **validated_data)
 
         return psdfile
 

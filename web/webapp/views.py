@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User, Group
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 
 from .models import PSDFile, Work, Episode
 from .serializers import PSDFileUploadSerializer
@@ -39,8 +39,10 @@ class PSDFileUploadViewSet(ModelViewSet):
     """
     queryset = PSDFile.objects.all()
     serializer_class = PSDFileUploadSerializer
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user,
-                        datafile=self.request.data.get('datafile'))
+                        datafile=self.request.data.get('datafile'),
+                        work=self.request.data.get('work'),
+                        episode=self.request.data.get('episode'))

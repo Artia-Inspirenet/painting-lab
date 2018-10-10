@@ -6,7 +6,7 @@ nm=$(tput sgr0)
 function clean () {
     echo "${bd}### Cleaning all these stuff including sqlite DB${nm}"
     rm db.sqlite3
-    rm -rf node_modules
+#    rm -rf node_modules
     find uploads/. -type f ! -name '.gitkeep' -exec rm {} \;
     find webapp/__pycache__/. -type f ! -name '__init__.*' -exec rm {} \;
     find webapp/migrations/. -type f ! -name '__init__.py' -exec rm {} \;
