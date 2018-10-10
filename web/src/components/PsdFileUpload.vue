@@ -1,7 +1,22 @@
 <template>
-  <div class="drag">
+  <div class="drag container bg-light">
+    <div class="p-4">
+      <div class="form-group">
+        <label for="work-name">Work Name</label>
+        <input type="text" id="work-name" class="form-control" v-model="info.work.title" placeholder="원피스">
+      </div>
+      <div class="form-group">
+        <label for="work-detail">Work Detail</label>
+        <textarea id="work-detail" class="form-control" v-model="info.work.detail" rows="5" placeholder="1997년 7월 22일에 연재를 시작한 오다 에이치로의 능력자 배틀 소년만화....">
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label for="episode-name">Episode Name</label>
+        <input type="text" id="episode-name" class="form-control" v-model="info.episode.title" placeholder="43화">
+      </div>
+    </div>
     <div class="upload">
-      <ul class="p-5" v-if="files.length">
+      <ul class="list-unstyled p-5" v-if="files.length">
         <li v-for="file in files" :key="file.id">
           <span>{{file.name}}</span> -
           <span>{{file.size | formatSize}}</span> -
@@ -28,6 +43,7 @@
           class="btn btn-primary"
           post-action="api/uploads/"
           :headers="{'X-CSRFToken': this.csrfTk }"
+          :data="{work:'sdfsdf',episode:'sdfsdf'}"
           :multiple="true"
           :drop="true"
           :drop-directory="true"
@@ -67,9 +83,18 @@ export default {
   components: {
     FileUpload,
   },
-  data() {
+  data: function () {
     return {
       files: [],
+      info: {
+        work: {
+          title: '',
+          detail: ''
+        },
+        episode: {
+          title: ''
+        },
+      },
     }
   },
   method: {
@@ -79,7 +104,7 @@ export default {
 
 <style scoped>
 .drag .btn {
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
 /*
@@ -110,4 +135,22 @@ export default {
   padding: 0;
 }
 */
+div div.drop-zone {
+  width: 100%;
+  height: 100px;
+  border: 1px #ababab dashed;
+  margin: 50px auto;
+}
+
+div.drop-zone p {
+  text-align: center;
+  line-height: 100px;
+  margin: 0;
+  padding: 0;
+}
+
+.drag {
+  border: 1px #ababab dashed;
+}
+
 </style>

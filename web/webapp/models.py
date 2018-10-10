@@ -49,6 +49,12 @@ class PSDFile(models.Model):
     uploaded = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User,
                              on_delete=models.CASCADE)
+    work = models.ForeignKey(Work,
+                             on_delete=models.CASCADE,
+                             null=True)
+    episode = models.ForeignKey(Episode,
+                                on_delete=models.CASCADE,
+                                null=True)
     datafile = models.FileField()
     w = models.IntegerField(null=True)
     h = models.IntegerField(null=True)

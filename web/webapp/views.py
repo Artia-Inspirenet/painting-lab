@@ -1,30 +1,36 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
+from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.parsers import FormParser, MultiPartParser
 
-from .models import PSDFile
-from .serializers import UserSerializer, GroupSerializer, PSDFileUploadSerializer
+from .models import PSDFile, Work, Episode
+from .serializers import PSDFileUploadSerializer
 
 
 def home(request):
-    return render(request, 'templates/index.html')
+    return render(request, 'index.html')
 
 
-class UserViewSet(ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+@api_view(['POST'])
+def psd_file_handler(request):
+    serializer = PSDFileUploadSerializer()
 
 
-class GroupViewSet(ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+#class UserViewSet(ModelViewSet):
+#    """
+#    API endpoint that allows users to be viewed or edited.
+#    """
+#    queryset = User.objects.all().order_by('-date_joined')
+#    serializer_class = UserSerializer
+#
+#
+#class GroupViewSet(ModelViewSet):
+#    """
+#    API endpoint that allows groups to be viewed or edited.
+#    """
+#    queryset = Group.objects.all()
+#    serializer_class = GroupSerializer
 
 
 class PSDFileUploadViewSet(ModelViewSet):
