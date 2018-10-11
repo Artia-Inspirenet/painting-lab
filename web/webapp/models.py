@@ -2,13 +2,25 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class Author(models.Model):
+    user = models.ForeignKey(User,
+                             on_delete=models.SET_NULL,
+                             null=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
 class Work(models.Model):
     '''A model for each story'''
     user = models.ForeignKey(User,
                              on_delete=models.SET_NULL,
                              null=True)
+    author = models.ForeignKey(Author,
+                               on_delete=models.SET_NULL,
+                               null=True)
     title = models.CharField(max_length=255)
-    detail = models.TextField(blank=True)
 
     def __str__(self):
         return self.title
@@ -18,6 +30,9 @@ class Episode(models.Model):
     user = models.ForeignKey(User,
                              on_delete=models.SET_NULL,
                              null=True)
+    author = models.ForeignKey(Author,
+                               on_delete=models.SET_NULL,
+                               null=True)
     work = models.ForeignKey(Work,
                              on_delete=models.SET_NULL,
                              null=True)
@@ -25,6 +40,27 @@ class Episode(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PSDFile(models.Model):
+    uploaded = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE)
+    author = models.ForeignKey(Author,
+                               on_delete=models.CASCADE,
+                               null=True)
+    work = models.ForeignKey(Work,
+                             on_delete=models.CASCADE,
+                             null=True)
+    episode = models.ForeignKey(Episode,
+                                on_delete=models.CASCADE,
+                                null=True)
+    datafile = models.FileField()
+    w = models.IntegerField(null=True)
+    h = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.datafile.name
 
 
 class Cut(models.Model):
@@ -43,24 +79,6 @@ class Cut(models.Model):
 
     def __str__(self):
         return self.index
-
-
-class PSDFile(models.Model):
-    uploaded = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User,
-                             on_delete=models.CASCADE)
-    work = models.ForeignKey(Work,
-                             on_delete=models.CASCADE,
-                             null=True)
-    episode = models.ForeignKey(Episode,
-                                on_delete=models.CASCADE,
-                                null=True)
-    datafile = models.FileField()
-    w = models.IntegerField(null=True)
-    h = models.IntegerField(null=True)
-
-    def __str__(self):
-        return self.datafile.name
 
 
 class Cluster(models.Model):

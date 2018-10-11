@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 
 from .models import PSDFile, Work, Episode
-from .serializers import PSDFileUploadSerializer
+from .serializers import PSDFileUploadSerializer, WorkSerializer, EpisodeSerializer
 
 
 def home(request):
@@ -44,5 +44,6 @@ class PSDFileUploadViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user,
                         datafile=self.request.data.get('datafile'),
+                        author=self.request.data.get('author'),
                         work=self.request.data.get('work'),
                         episode=self.request.data.get('episode'))

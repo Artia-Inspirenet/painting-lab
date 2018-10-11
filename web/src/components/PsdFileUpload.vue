@@ -2,17 +2,16 @@
   <div class="drag container bg-light">
     <div class="p-4">
       <div class="form-group">
-        <label for="work-name">Work Name</label>
-        <input type="text" id="work-name" class="form-control" v-model="info.work.title" placeholder="원피스">
+        <label for="author-name">Author Name</label>
+        <input type="text" id="author-name" class="form-control" v-model="info.author.name" placeholder="조석">
       </div>
       <div class="form-group">
-        <label for="work-detail">Work Detail</label>
-        <textarea id="work-detail" class="form-control" v-model="info.work.detail" rows="5" placeholder="1997년 7월 22일에 연재를 시작한 오다 에이치로의 능력자 배틀 소년만화....">
-        </textarea>
+        <label for="work-name">Work Name</label>
+        <input type="text" id="work-name" class="form-control" v-model="info.work.title" placeholder="마음의 소리">
       </div>
       <div class="form-group">
         <label for="episode-name">Episode Name</label>
-        <input type="text" id="episode-name" class="form-control" v-model="info.episode.title" placeholder="43화">
+        <input type="text" id="episode-name" class="form-control" v-model="info.episode.title" placeholder="643화">
       </div>
     </div>
     <div class="upload">
@@ -38,12 +37,13 @@
         </div>
       </ul>
 
+
       <div class="btn">
         <file-upload
           class="btn btn-primary"
           post-action="api/uploads/"
           :headers="{'X-CSRFToken': this.csrfTk }"
-          :data="{ 'work_title': info.work.title, 'work_detail': info.work.detail, 'episode': info.episode.title }"
+          :data="{ author: info.author.name, work: info.work.title, episode: info.episode.title }"
           :multiple="true"
           :drop="true"
           :drop-directory="true"
@@ -87,12 +87,14 @@ export default {
     return {
       files: [],
       info: {
+        author: {
+          name: ''
+        },
         work: {
           title: '',
-          detail: ''
         },
         episode: {
-          title: ''
+          title: '',
         },
       },
     }
