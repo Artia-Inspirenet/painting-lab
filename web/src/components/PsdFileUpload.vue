@@ -47,7 +47,7 @@
           :multiple="true"
           :drop="true"
           :drop-directory="true"
-          name="datafile"
+          name="psdfile"
           v-model="files"
           ref="upload">
           <i class="fa fa-plus"></i>
@@ -73,6 +73,7 @@
 
 <script>
 import FileUpload from 'vue-upload-component'
+import axios from 'axios'
 
 
 export default {
@@ -97,9 +98,50 @@ export default {
           title: '',
         },
       },
+      lookupdb: {
+        author: [{
+          id: 0,
+          name: ''
+        }],
+        work: [{
+          id: 0,
+          title: ''
+        }],
+        episode: [{
+          id: 0,
+          title: ''
+        }],
+      }
     }
   },
-  method: {
+  methods: {
+    consoleTest: function () {
+      console.log('Hello, Hi.')
+    },
+    onLoadAuthor: function () {
+      axios.get('/api/author').then( function (response) {
+        console.log(response);
+        this.lookupdb.author = response.data.author;
+      });
+    },
+    onLoadWork: function () {
+      axios.get('/api/work').then( function (response) {
+        console.log(response);
+        this.lookupdb.work = response.data.work;
+      });
+    },
+    onLoadEpisode: function () {
+      axios.get('/api/episode').then( function (response) {
+        console.log(response);
+        this.lookupdb.episode = response.data.episode;
+      });
+    },
+  },
+  beforeMount: function () {
+    this.consoleTest();
+    this.onLoadAuthor();
+    this.onLoadWork();
+    this.onLoadEpisode();
   },
 }
 </script>

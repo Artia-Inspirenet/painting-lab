@@ -3,34 +3,17 @@ from django.contrib.auth.models import User, Group
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
+from rest_framework.response import Response
+#import pytoshop
+#from pytoshop.user import nested_layers as nl
 
-from .models import PSDFile, Work, Episode
-from .serializers import PSDFileUploadSerializer, WorkSerializer, EpisodeSerializer
+from .models import PSDFile, Work, Episode, Author
+from .serializers import PSDFileUploadSerializer, WorkSerializer, EpisodeSerializer, AuthorSerializer
+
 
 
 def home(request):
     return render(request, 'index.html')
-
-
-@api_view(['POST'])
-def psd_file_handler(request):
-    serializer = PSDFileUploadSerializer()
-
-
-#class UserViewSet(ModelViewSet):
-#    """
-#    API endpoint that allows users to be viewed or edited.
-#    """
-#    queryset = User.objects.all().order_by('-date_joined')
-#    serializer_class = UserSerializer
-#
-#
-#class GroupViewSet(ModelViewSet):
-#    """
-#    API endpoint that allows groups to be viewed or edited.
-#    """
-#    queryset = Group.objects.all()
-#    serializer_class = GroupSerializer
 
 
 class PSDFileUploadViewSet(ModelViewSet):
@@ -41,9 +24,15 @@ class PSDFileUploadViewSet(ModelViewSet):
     serializer_class = PSDFileUploadSerializer
     parser_classes = (MultiPartParser, FormParser, JSONParser)
 
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user,
-                        datafile=self.request.data.get('datafile'),
-                        author=self.request.data.get('author'),
-                        work=self.request.data.get('work'),
-                        episode=self.request.data.get('episode'))
+                        datafile=self.request.FILES['psdfile'],
+                        author=self.request.data['author'],
+                        work=self.request.data['work'],
+                        episode=self.request.data['episode'])
+
+        #datafile=self.request.FILES['datafile']
+        #psd = pytoshop.read(datafile)
+        #layers = nl.psd_to_nested_layers(psd)
+        #nl.pprint(layers)
