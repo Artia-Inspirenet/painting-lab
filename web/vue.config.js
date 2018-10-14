@@ -1,13 +1,12 @@
 const path = require('path')
 const BundleTracker  = require('webpack-bundle-tracker')
-const jQuery = require('jquery')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
-  baseUrl: "http://localhost:8080/",
+  assetsDir: 'static',
 
   devServer: {
     headers: {
@@ -17,21 +16,14 @@ module.exports = {
 
   configureWebpack: {
 
-    context: __dirname,
-
     output: {
         filename: "[name]-[hash].js",
-    },
-
-    resolve: {
-      alias: {
-        '__STATIC__': resolve('static'),
-      },
     },
 
     plugins: [
       new BundleTracker({
         path: __dirname,
+        publicPath: "http://localhost:8080/",
         filename: './webpack-stats.json'
       })
     ]

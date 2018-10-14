@@ -11,7 +11,7 @@ from webapp import views
 router = routers.DefaultRouter()
 #router.register(r'users', views.UserViewSet)
 #router.register(r'groups', views.GroupViewSet)
-router.register(r'uploads', views.PSDFileUploadViewSet, base_name='psdupload')
+router.register(r'psdfile', views.PSDFileUploadViewSet, base_name='psdfile')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
