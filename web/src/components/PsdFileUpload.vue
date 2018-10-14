@@ -49,6 +49,7 @@
           :drop-directory="true"
           name="psdfile"
           v-model="files"
+          @input-filter="psdFilter"
           ref="upload">
           <i class="fa fa-plus"></i>
           Select files
@@ -101,6 +102,11 @@ export default {
     }
   },
   methods: {
+    psdFilter: function (newFile, oldFile, prevent) {
+      if (!/\.(psd)$/i.test(newFile.name)) {
+        return prevent()
+      }
+    }
   },
   beforeMount: function () {
   },
