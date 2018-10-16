@@ -2,6 +2,7 @@
   <v-stage ref="stage" :config="confStage">
     <v-layer ref="layer">
       <v-circle :config="confCircle"></v-circle>
+      <v-shape :config="confPath"></v-shape>
     </v-layer>
   </v-stage>
 </template>
