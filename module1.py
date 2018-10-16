@@ -27,13 +27,13 @@ def layer_index_and_check_names(psd):
 			backcolor_in = True
 			if layer.visible == False:
 				backcolor_visible = False
-			
+
 		if layer.name == 'frame':
 			frame_idx = i
 			frame_in = True
 			if layer.visible == False:
 				frame_visible = False
-			
+
 		if layer.name == 'line_drawing':
 			line_drawing_idx = i
 			line_drawing_in = True
@@ -57,15 +57,15 @@ def layer_index_and_check_names(psd):
 	if frame_visible == False:
 		print ("frame is not visible")
 	if line_drawing_visible == False:
-		print ("line_drawing is not visible")		
+		print ("line_drawing is not visible")
 
-	return backcolor_idx, frame_idx, line_drawing_idx, backcolor_visible, frame_visible, line_drawing_visible			
+	return backcolor_idx, frame_idx, line_drawing_idx, backcolor_visible, frame_visible, line_drawing_visible
 
 
 
 # function for saving image of psd file which has only frame and backcolor layers
 def save_backcolor_frame(psd_file, frame_idx, backcolor_idx, directory):
-	
+
 	psd = psd_file
 	psd.layers = [psd.layers[frame_idx], psd.layers[backcolor_idx]] # order is important!!
 	backcolor_frame_img = psd.as_PIL_merged() # type(backcolor_frame_img) = RGBA
@@ -73,14 +73,14 @@ def save_backcolor_frame(psd_file, frame_idx, backcolor_idx, directory):
 	backcolor_frame_saved_img = directory+'backcolor_frame.png'
 	backcolor_frame_img.save(backcolor_frame_saved_img)
 	print ('backcolor frame image saved')
-	
+
 	return backcolor_frame_saved_img
 
 
 
 # function for saving whole psd_file into image_file
 def save_picture(psd_file, directory):
-	
+
 	psd = psd_file
 	picture_img = psd.as_PIL()
 	picture_img.save(directory+'picture.png')
@@ -90,13 +90,13 @@ def save_picture(psd_file, directory):
 
 # function for saving input_image
 def save_input_picture(psd_file, line_drawing_idx, backcolor_idx, directory):
-	
+
 	psd = psd_file
 	psd.layers = [psd.layers[line_drawing_idx], psd.layers[backcolor_idx]]
 	input_img = psd.as_PIL_merged()
 	input_picture_img = directory+'input_picture.png'
 	input_img.save(input_picture_img)
-	
+
 	return input_picture_img
 
 
@@ -110,7 +110,7 @@ def cropped_scenes(image, scenes, directory):
 	img = cv2.imread(image)
 
 	# sort frame sequence
-	seq_array = np.lexsort((scenes[:,0], scenes[:,1])) 
+	seq_array = np.lexsort((scenes[:,0], scenes[:,1]))
 	seq_list = seq_array.tolist()
 	scenes_list = scenes.tolist()
 	sorted_scenes_list = []
@@ -160,7 +160,7 @@ def load_psd():
 
         	psd = PSDImage.load(load_path+file)
         	backcolor_idx, frame_idx, line_drawing_idx, backcolor_visible, frame_visible, line_drawing_visible = layer_index_and_check_names(psd)
-            
+
         	if (backcolor_idx == 100) or (frame_idx == 100) or (line_drawing_idx == 100) :
         		name_error_list.append(load_path+file)
         		continue
@@ -182,7 +182,7 @@ def load_psd():
         	xy_coordinate_list = cropped_scenes(input_picture_img, cut_point_list, result_dir)
         	with open(result_dir+'xy_coordinate.txt', 'wb') as f:
         		pickle.dump(xy_coordinate_list, f)
-        	print (load_path+file+' is over')	            
+        	print (load_path+file+' is over')
 
     print ('everything is done')
     with open(load_path+'name_error_psd.txt','wb') as f :
