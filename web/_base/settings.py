@@ -137,12 +137,12 @@ REST_FRAMEWORK = {
 }
 
 # modified for vue.js
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'dist'),
     os.path.join(BASE_DIR, 'static'),
 )
 STATIC_ROOT = os.path.join(BASE_DIR, 'public')
-STATIC_URL = '/static/'
 
 WEBPACK_LOADER = {
     'DEFAULT': {

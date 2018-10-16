@@ -1,12 +1,11 @@
 import Vue from 'vue'
-//import jQuery from 'jquery'
-//import Cookies from 'js-cookie'
+import Vuex from 'vuex'
+import VueKonva from 'vue-konva'
 
 import App from './App.vue'
 
-//Vue.use(jQuery)
-//Vue.use(Cookies)
-
+Vue.use(Vuex)
+Vue.use(VueKonva)
 Vue.config.productionTip = false
 
 Vue.filter('formatSize', function (size) {
@@ -22,6 +21,14 @@ Vue.filter('formatSize', function (size) {
   return size.toString() + ' B'
 })
 
+const store = new Vuex.Store({
+  state: {
+  },
+  mutations: {
+  }
+})
+
 new Vue({
-  render: h => h(App)
+  render: h => h(App),
+  store
 }).$mount('#app')

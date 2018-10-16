@@ -42,6 +42,7 @@
     -->
     <PsdFileUpload
       :csrf-tk=token />
+    <InstancePicker />
   </div>
 </template>
 
@@ -53,6 +54,7 @@ import jQuery from 'jquery'
 import Cookies from 'js-cookie'
 
 import PsdFileUpload from './components/PsdFileUpload.vue'
+import InstancePicker from './components/InstancePicker.vue'
 
 let csrftoken = Cookies.get('csrftoken');
 let formData = new FormData();
@@ -80,7 +82,8 @@ export default {
   },
   components: {
     //HelloWorld
-    PsdFileUpload
+    PsdFileUpload,
+    InstancePicker
   },
   methods: {
 

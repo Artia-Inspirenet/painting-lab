@@ -41,7 +41,7 @@
       <div class="btn">
         <file-upload
           class="btn btn-primary"
-          post-action="api/psdfile/"
+          post-action="psdfile/"
           :headers="{'X-CSRFToken': this.csrfTk }"
           :data="{ author: info.author.name, work: info.work.title, episode: info.episode.title }"
           :multiple="true"
@@ -106,7 +106,17 @@ export default {
       if (!/\.(psd)$/i.test(newFile.name)) {
         return prevent()
       }
-    }
+    },
+    getResponse: function (newFile, oldFile) {
+      if (newFile && oldFile && !newFile.active && oldFile.active) {
+        // Get response data
+        console.log('response', newFile.response)
+        if (newFile.xhr) {
+          //  Get the response status code
+          console.log('status', newFile.xhr.status)
+        }
+      }
+    },
   },
   beforeMount: function () {
   },

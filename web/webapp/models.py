@@ -60,7 +60,7 @@ class PSDFile(models.Model):
     h = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.datafile.name
+        return self.psdfile.name
 
 
 class Cut(models.Model):
