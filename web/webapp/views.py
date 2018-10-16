@@ -99,7 +99,6 @@ def psdfile_handler(request):
                 result = final_img[top[i]:bottom[i]+1, left[i]:right[i]+1, :]
                 cv2.imwrite(file_path + '/{0}.png'.format(i), result[:,:,::-1])
 
-        return dict({img: 'filepath', x:0, y:4, h:34, w:34})
         #
         #
         #
