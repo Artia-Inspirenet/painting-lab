@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.contrib.auth.models import User, Group
+from django.core.files import File
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from rest_framework.response import Response
 
-import pytoshop
+import pytoshop, os
 from pytoshop.user import nested_layers as nl
 from pytoshop.enums import *
 import numpy as np
@@ -15,7 +16,7 @@ from PIL import Image
 from .module import module1_test as m1
 import cv2
 
-from .models import PSDFile, Work, Episode, Author
+from .models import PSDFile, Work, Episode, Author, Cut
 from .serializers import PSDFileUploadSerializer, WorkSerializer, EpisodeSerializer, AuthorSerializer
 
 
@@ -115,7 +116,22 @@ def psdfile_handler(request):
 
 
 
+# Just for example, this view function makes cut again and agian when request incommig.
 @api_view(['GET', 'POST'])
 def keypoint_finder(request):
-    keypoints = []
-    return Response({'keypoints': keypoints})
+    if request.method == 'GET':
+
+        with open(settings.MEDIA_ROOT+'/sample/humanlogo.png', 'rb') as fd:
+            init = { 'img_file':File(fd),
+                     'x':0,
+                     'y':0,
+                     'w':1024,
+                     'h':768 }
+
+            cutimg = Cut.objects.create(**init)
+
+        cut_url = os.path.join(settings.MEDIA_URL,cutimg.img_file.name[len(settings.MEDIA_ROOT)+1:])
+        keypoints = []
+        data = dict({'cutimg_url': cut_url,
+                     'keypoints': keypoints})
+        return Response(data=data, content_type='multipart/form-data; charset=utf-8')

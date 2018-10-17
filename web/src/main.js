@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueKonva from 'vue-konva'
+import axios from 'axios'
 
 import App from './App.vue'
 
 Vue.use(Vuex)
 Vue.use(VueKonva)
 Vue.config.productionTip = false
+Vue.prototype.$http = axios
 
 Vue.filter('formatSize', function (size) {
   if (size > 1024 * 1024 * 1024 * 1024) {

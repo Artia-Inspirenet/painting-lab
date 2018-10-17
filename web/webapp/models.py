@@ -65,7 +65,8 @@ class PSDFile(models.Model):
 
 class Cut(models.Model):
     episode = models.ForeignKey(Episode,
-                                on_delete=models.CASCADE)
+                                on_delete=models.CASCADE,
+                                null=True)
     # This field is for order
     pre_cut = models.OneToOneField('self',
                                    related_name='previous_cut',
@@ -78,7 +79,7 @@ class Cut(models.Model):
     h = models.IntegerField()
 
     def __str__(self):
-        return self.index
+        return self.img_file.name.split('/')[-1]
 
 
 class Cluster(models.Model):
