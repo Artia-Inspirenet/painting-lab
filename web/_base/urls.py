@@ -21,6 +21,7 @@ urlpatterns = [
 #    url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^psdfile/$', views.psdfile_handler),
+    url(r'^keypoints/$', views.keypoint_finder),
     path('admin/', admin.site.urls),
     #path('', include('webapp.urls')),
     #path('auth/', include('django.contrib.auth.urls')),

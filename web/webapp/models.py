@@ -64,7 +64,6 @@ class PSDFile(models.Model):
 
 
 class Cut(models.Model):
-    index = models.PositiveIntegerField(primary_key=True)
     episode = models.ForeignKey(Episode,
                                 on_delete=models.CASCADE)
     # This field is for order
@@ -72,6 +71,7 @@ class Cut(models.Model):
                                    related_name='previous_cut',
                                    null=True,
                                    on_delete=None)
+    img_file = models.FileField()
     x = models.IntegerField()
     y = models.IntegerField()
     w = models.IntegerField()

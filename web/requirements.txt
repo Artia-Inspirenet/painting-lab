@@ -7,7 +7,6 @@ django-channels==0.7.0
 django-rest-framework==0.1.0
 django-webpack-loader==0.6.0
 djangorestframework==3.8.2
-djongo==1.2.30
 docopt==0.6.2
 ExifRead==2.1.2
 idna==2.7

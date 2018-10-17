@@ -22,7 +22,7 @@ function mkvir () {
         mkvirtualenv $2 -p python3
     else
         echo "${bd}### No virtualenv created. If you want to make one, just type name like below${nm}"
-        echo "${bd}### $ bash run.sh install web-tool${nm}"
+        echo "${bd}### $ bash run.sh install webapp${nm}"
     fi
 
 }
@@ -46,7 +46,7 @@ function setenv () {
 function setpswd () {
 
     PASS=`cat superuserpass.txt`
-    echo "${bd}### Make superuser for web-tool: Go http://localhost:8000/admin/${nm}"
+    echo "${bd}### Make superuser for webapp: Go http://localhost:8000/admin/${nm}"
     echo "${bd}### ID: admin${nm}"
     echo "${bd}### PW: $PASS${nm}"
     echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', '', '$PASS')" | python3 manage.py shell

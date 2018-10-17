@@ -1,8 +1,7 @@
 <template>
   <v-stage ref="stage" :config="confStage">
     <v-layer ref="layer">
-      <v-circle :config="confCircle"></v-circle>
-      <v-shape :config="confPath"></v-shape>
+      <v-line :config="confLine"></v-line>
     </v-layer>
   </v-stage>
 </template>
@@ -11,46 +10,57 @@
 export default {
   name: 'InstancePicker',
   data: function () {
+      let scale =  Math.random();
     return {
-      dots: [],
       confStage: {
         width: 1024,
         height: 768
       },
-      confCircle: {
-        x: 100,
-        y: 100,
-        radius: 70,
-        fill: "red",
-        stroke: "black",
-        strokeWidth: 4
-      },
-      confPath:{
-        sceneFunc: function(context) {
-          context.beginPath();
-          context.moveTo(20, 50);
-          context.lineTo(220, 80);
-          context.quadraticCurveTo(150, 100, 260, 170);
-          context.closePath();
-
-          // special Konva.js method
-          context.fillStrokeShape(this);
+      confStar: {
+        x: Math.random() * 1024,
+        y: Math.random() * 768,
+        numPoints: 5,
+        innerRadius: 30,
+        outerRadius: 50,
+        fill: '#89b717',
+        opacity: 0.8,
+        draggable: true,
+        scale: {
+          x : scale*5,
+          y : scale*10
         },
+        rotation: Math.random() * 180,
+        shadowColor: 'black',
+        shadowBlur: 10,
+        shadowOffset: {
+          x : 5,
+          y : 5
+        },
+        shadowOpacity: 0.6,
+        // custom attribute
+        startScale: scale
+      },
+      confLine:{
+        points: [23, 20, 23, 160, 70, 93, 150, 109, 290, 139, 270, 93],
         fill: '#00D2FF',
         stroke: 'black',
-        strokeWidth: 4
-      }
+        strokeWidth: 5,
+        closed : true
+      },
     }
   },
   methods: {
+
   },
   components: {
+  },
+  computed: {
   }
 
 }
 
 </script>
 
- <style scoped>
+<style scoped>
 
 </style>
