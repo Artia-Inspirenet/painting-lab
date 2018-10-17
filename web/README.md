@@ -3,7 +3,21 @@
 - [Vue.js](https://kr.vuejs.org/v2/guide/index.html) with [Webpack](https://webpack.js.org/concepts/)
 - [Vue CLI 3](https://cli.vuejs.org/)
 - From node package: [vue-upload-component](https://lian-yue.github.io/vue-upload-component/#/en/documents), [vue-konva](http://rafaelescala.com/vue-konva-doc/), [Konva: docs](https://konvajs.github.io/docs/), [axios](https://github.com/axios/axios)
-- Furthermore: [Vuex](https://vuex.vuejs.org/kr/)
+- Furthermore - not applied yet: [Vuex](https://vuex.vuejs.org/kr/), [vue-router](https://router.vuejs.org/kr/)
+
+## Endpoints
+
+### Home
+
+`/`
+
+### PSDFile Upload
+
+`/psdfile/`
+
+### Keypoints and Contour
+
+`/keypoints/`
 
 Changed for public service ***webapp***, artia app is deprecated.
 
