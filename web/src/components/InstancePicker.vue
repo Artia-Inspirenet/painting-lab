@@ -1,8 +1,21 @@
 <template>
-  <v-stage ref="stage" :config="confStage">
-    <v-layer ref="layer">
-      <v-line :config="confLine"></v-line>
+  <v-stage ref="instancepicker" :config="confStage">
+    <v-layer ref="cut-img">
       <v-image :config="confbgImage"></v-image>
+    </v-layer>
+    <v-layer ref="keypoints">
+      <v-circle
+        v-for="point in confKeyPoints"
+        @mousemove="handleMouseOver"
+        @mouseout="handleMouseOut"
+        :config="{ x: point.x,
+                   y: point.y,
+                   radius: 15,
+                   fill: 'rgb(55,55,78,0.5)',
+                   stroke: 'black',
+                   strokeWidth: 2}"
+        ></v-circle>
+      <v-text ref="msgtext" :config="msgText"></v-text>
     </v-layer>
   </v-stage>
 </template>
@@ -13,19 +26,19 @@ export default {
   data: function () {
     return {
       cutUrl : '',
-      cutImg: null,
-      keyPoints: [],
       confStage: {
         width: 1024,
         height: 768
       },
-      confLine:{
-        points: [23, 20, 23, 160, 70, 93, 150, 109, 290, 139, 270, 93],
-        fill: '#00D2FF',
-        stroke: 'black',
-        strokeWidth: 5,
-        closed : true
-      },
+      confKeyPoints: [],
+      msgText: {
+        x: 10,
+        y: 10,
+        fontFamily: 'Calibri',
+        fontSize: 24,
+        text: '',
+        fill: 'black'
+      }
     }
   },
   methods: {
@@ -33,9 +46,21 @@ export default {
       this.$http.get("/keypoints/")
         .then((response) => {
           this.cutUrl = response.data.cutimg_url;
-          this.keyPoints = response.data.keypoints;
-          this.cutImg.src = this.cutUrl
+          this.confKeyPoints = response.data.keypoints;
         })
+    },
+    writeMessage: function (message) {
+      this.$refs.msgtext.getStage().setText(message);
+      this.$refs.keypoints.getStage().draw();
+    },
+    handleMouseOver: function (vueComponent, event) {
+      const mousePos = this.$refs.instancepicker.getStage().getPointerPosition();
+      const x = mousePos.x - 190;
+      const y = mousePos.y - 40;
+      this.writeMessage('x: ' + x + ', y: ' + y);
+    },
+    handleMouseOut: function (vueComponent, event) {
+      this.writeMessage('Mouseout triangle');
     },
   },
   created: function () {
@@ -45,12 +70,12 @@ export default {
   },
   computed: {
     confbgImage: function () {
-      this.cutImg = new Image();
-      this.cutImg.src = this.cutUrl;
+      let img = new Image();
+      img.src = this.cutUrl;
       return {
         x: 50,
         y: 50,
-        image: this.cutImg,
+        image: img,
         width: 640,
         height: 640
       }

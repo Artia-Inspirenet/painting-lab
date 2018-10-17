@@ -116,7 +116,7 @@ def psdfile_handler(request):
 
 
 
-# Just for example, this view function makes cut again and agian when request incommig.
+# Just for example, this view function makes cut again and agian when request income.
 @api_view(['GET', 'POST'])
 def keypoint_finder(request):
     if request.method == 'GET':
@@ -125,13 +125,15 @@ def keypoint_finder(request):
             init = { 'img_file':File(fd),
                      'x':0,
                      'y':0,
-                     'w':1024,
-                     'h':768 }
+                     'w':300,
+                     'h':335 }
 
             cutimg = Cut.objects.create(**init)
 
-        cut_url = os.path.join(settings.MEDIA_URL,cutimg.img_file.name[len(settings.MEDIA_ROOT)+1:])
-        keypoints = []
-        data = dict({'cutimg_url': cut_url,
-                     'keypoints': keypoints})
-        return Response(data=data, content_type='multipart/form-data; charset=utf-8')
+        cut_url = os.path.join(settings.MEDIA_URL, cutimg.img_file.name[len(settings.MEDIA_ROOT)+1:])
+        keypoints = [{ 'x': x, 'y': 10*x } for x  in range(140)]
+        keypoints.append({ 'x': 145,
+                           'y': 245 })
+        data = dict({ 'cutimg_url': cut_url,
+                      'keypoints': keypoints })
+        return Response(data=data)
