@@ -1,5 +1,5 @@
 <template>
-  <div class="drag container bg-light">
+  <div class="container bg-light drag">
     <div class="p-4">
       <div class="form-group">
         <label for="author-name">Author Name</label>
@@ -127,35 +127,6 @@ export default {
 .drag .btn {
   margin: 0.5rem;
 }
-
-/*
-
-.drag .drop-active {
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  position: fixed;
-  z-index: 9999;
-  opacity: .6;
-  text-align: center;
-  background: #000;
-}
-
-.drag .drop-active h3 {
-  margin: -.5em 0 0;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  font-size: 40px;
-  color: #fff;
-  padding: 0;
-}
-*/
 div div.drop-zone {
   width: 100%;
   height: 100px;

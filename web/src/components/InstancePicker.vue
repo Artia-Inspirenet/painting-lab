@@ -1,6 +1,6 @@
 <template>
-  <v-stage ref="instancepicker" :config="confStage">
-    <v-layer ref="cut-img">
+  <v-stage class="container" ref="stage" :config="confStage">
+    <v-layer ref="cutimg">
       <v-image :config="confbgImage"></v-image>
     </v-layer>
     <v-layer ref="keypoints">
@@ -10,8 +10,8 @@
         @mouseout="handleMouseOut"
         :config="{ x: point.x,
                    y: point.y,
-                   radius: 15,
-                   fill: 'rgb(55,55,78,0.5)',
+                   radius: 5,
+                   fill: 'rgb(0,155,255,0.5)',
                    stroke: 'black',
                    strokeWidth: 2}"
         ></v-circle>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'InstancePicker',
+  name: 'stage',
   data: function () {
     return {
       cutUrl : '',
@@ -54,9 +54,9 @@ export default {
       this.$refs.keypoints.getStage().draw();
     },
     handleMouseOver: function (vueComponent, event) {
-      const mousePos = this.$refs.instancepicker.getStage().getPointerPosition();
-      const x = mousePos.x - 190;
-      const y = mousePos.y - 40;
+      const mousePos = this.$refs.stage.getStage().getPointerPosition();
+      const x = mousePos.x;
+      const y = mousePos.y;
       this.writeMessage('x: ' + x + ', y: ' + y);
     },
     handleMouseOut: function (vueComponent, event) {

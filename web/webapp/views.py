@@ -7,7 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from rest_framework.response import Response
 
-import pytoshop, os
+import pytoshop, os, random
 from pytoshop.user import nested_layers as nl
 from pytoshop.enums import *
 import numpy as np
@@ -131,7 +131,7 @@ def keypoint_finder(request):
             cutimg = Cut.objects.create(**init)
 
         cut_url = os.path.join(settings.MEDIA_URL, cutimg.img_file.name[len(settings.MEDIA_ROOT)+1:])
-        keypoints = [{ 'x': x, 'y': 10*x } for x  in range(140)]
+        keypoints = [{ 'x': x*random.random(), 'y': x*random.random() } for x  in range(100,900,10)]
         keypoints.append({ 'x': 145,
                            'y': 245 })
         data = dict({ 'cutimg_url': cut_url,

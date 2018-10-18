@@ -25,6 +25,7 @@ Vue.filter('formatSize', function (size) {
 
 const store = new Vuex.Store({
   state: {
+    chapter: 0
   },
   mutations: {
   }
