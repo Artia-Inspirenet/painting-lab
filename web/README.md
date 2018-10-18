@@ -8,16 +8,48 @@ Repackaged to edit easily. Any `npm` commands are not necessary. Edit `/static/j
 
 ### Home
 
-`/`
+`/`: Just renders `templates/base.html` and does nothing else.
 
 ### PSDFile Upload
 
-`/psdfile/`
+`/psdfile/`: Consumed by POST request. `psdfile` can be one or many.
+
+**JSON Request content**
+```json
+{
+    "author": String,
+    "work": String,
+    "episode": String,
+    "psdfile": <binary file>,
+    "psdfile": <binary file>,
+    .
+    .
+    "psdfile": <binary file>
+}
+```
+
+**JSON Response**
+```json
+{
+    "status": "success"
+}
+```
 
 ### Keypoints and Contour
 
-`/keypoints/`
+`/keypoints/`: Consumed by GET request. `keypoints`'s elements can be one or many.
 
+**JSON Response**
+```json
+{
+    "cutimg_url": String,
+    "keypoints": [{ "x": Number, "y": Number },
+                  { "x": Number, "y": Number },
+                  .
+                  .
+                  { "x": Number, "y": Number }]
+}
+```
 
 # django - backend
 
