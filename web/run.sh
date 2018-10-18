@@ -53,13 +53,6 @@ function setpswd () {
 
 }
 
-function vueinit (){
-
-    echo "${bd}### Install required npm_modules${nm}"
-    npm install
-
-}
-
 if [ "$1" = "clean" ]; then
     clean
     exit 1
@@ -70,10 +63,6 @@ elif [ "$1" = "install" ]; then
     mkvir
     setenv
     setpswd
-
-elif [ "$1" = "npmi" ]; then
-
-    vueinit
 
 fi
 

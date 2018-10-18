@@ -10,13 +10,6 @@ from rest_framework import routers
 
 from webapp import views
 
-#router = routers.DefaultRouter()
-#router.register(r'users', views.UserViewSet)
-#router.register(r'groups', views.GroupViewSet)
-#router.register(r'psdfile', views.PSDFileUploadViewSet, base_name='psdfile')
-
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='base.html'), name='home'),
@@ -25,10 +18,6 @@ urlpatterns = [
     url(r'^psdfile/$', views.psdfile_handler),
     url(r'^keypoints/$', views.keypoint_finder),
     path('admin/', admin.site.urls),
-#    url(r'^api/', include(router.urls)),
-    #path('', include('webapp.urls')),
-    #path('auth/', include('django.contrib.auth.urls')),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

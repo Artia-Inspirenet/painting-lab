@@ -1,5 +1,31 @@
-<template>
-  <div class="container bg-light drag">
+Vue.config.productionTip = false
+Vue.prototype.$http = axios
+
+Vue.filter('formatSize', function (size) {
+  if (size > 1024 * 1024 * 1024 * 1024) {
+    return (size / 1024 / 1024 / 1024 / 1024).toFixed(2) + ' TB'
+  } else if (size > 1024 * 1024 * 1024) {
+    return (size / 1024 / 1024 / 1024).toFixed(2) + ' GB'
+  } else if (size > 1024 * 1024) {
+    return (size / 1024 / 1024).toFixed(2) + ' MB'
+  } else if (size > 1024) {
+    return (size / 1024).toFixed(2) + ' KB'
+  }
+  return size.toString() + ' B'
+})
+
+const store = new Vuex.Store({
+  state: {
+  },
+  mutations: {
+  }
+})
+
+Vue.component('file-upload', VueUploadComponent)
+
+var PsdFileUpload = {
+  template: `
+  <div id="psd-file-upload" class="container bg-light drag">
     <div class="p-4">
       <div class="form-group">
         <label for="author-name">Author Name</label>
@@ -42,7 +68,7 @@
         <file-upload
           class="btn btn-primary"
           post-action="psdfile/"
-          :headers="{'X-CSRFToken': this.csrfTk }"
+          :headers="{ 'X-CSRFToken' : this.csrfTk }"
           :data="{ author: info.author.name, work: info.work.title, episode: info.episode.title }"
           :multiple="true"
           :drop="true"
@@ -69,21 +95,9 @@
         </button>
       </div>
     </div>
-  </div>
-</template>
-
-<script>
-import FileUpload from 'vue-upload-component'
-//import axios from 'axios'
-
-
-export default {
-  name: 'PsdFileUpload',
+  </div>`,
   props: {
     csrfTk: String,
-  },
-  components: {
-    FileUpload,
   },
   data: function () {
     return {
@@ -98,7 +112,7 @@ export default {
         episode: {
           title: '',
         },
-      },
+      }
     }
   },
   methods: {
@@ -118,31 +132,101 @@ export default {
       }
     },
   },
-  beforeMount: function () {
+}
+
+var InstancePicker = {
+  template: `
+  <v-stage id="instance-picker" class="container" ref="stage" :config="confStage">
+    <v-layer ref="cutimg">
+      <v-image :config="confbgImage"></v-image>
+    </v-layer>
+    <v-layer ref="keypoints">
+      <v-circle
+        v-for="point in confKeyPoints"
+        @mousemove="handleMouseOver"
+        @mouseout="handleMouseOut"
+        :config="{ x: point.x,
+                   y: point.y,
+                   radius: 5,
+                   fill: 'rgb(0,155,255,0.5)',
+                   stroke: 'black',
+                   strokeWidth: 2}"
+        ></v-circle>
+      <v-text ref="msgtext" :config="msgText"></v-text>
+    </v-layer>
+  </v-stage>`,
+  data: function () {
+    return {
+      cutUrl : '',
+      confStage: {
+        width: 1024,
+        height: 768
+      },
+      confKeyPoints: [],
+      msgText: {
+        x: 10,
+        y: 10,
+        fontFamily: 'Calibri',
+        fontSize: 24,
+        text: '',
+        fill: 'black'
+      }
+    }
+  },
+  methods: {
+    initCutUrl: function () {
+      this.$http.get("/keypoints/")
+        .then((response) => {
+          this.cutUrl = response.data.cutimg_url;
+          this.confKeyPoints = response.data.keypoints;
+        })
+    },
+    writeMessage: function (message) {
+      this.$refs.msgtext.getStage().setText(message);
+      this.$refs.keypoints.getStage().draw();
+    },
+    handleMouseOver: function (vueComponent, event) {
+      const mousePos = this.$refs.stage.getStage().getPointerPosition();
+      const x = mousePos.x;
+      const y = mousePos.y;
+      this.writeMessage('x: ' + x + ', y: ' + y);
+    },
+    handleMouseOut: function (vueComponent, event) {
+      this.writeMessage('Mouseout triangle');
+    },
+  },
+  created: function () {
+    this.initCutUrl();
+  },
+  components: {
+  },
+  computed: {
+    confbgImage: function () {
+      let img = new Image();
+      img.src = this.cutUrl;
+      return {
+        x: 50,
+        y: 50,
+        image: img,
+        width: 640,
+        height: 640
+      }
+    }
   },
 }
-</script>
 
-<style scoped>
-.drag .btn {
-  margin: 0.5rem;
-}
-div div.drop-zone {
-  width: 100%;
-  height: 100px;
-  border: 1px #ababab dashed;
-  margin: 50px auto;
-}
+var csrftoken = Cookies.get('csrftoken');
 
-div.drop-zone p {
-  text-align: center;
-  line-height: 100px;
-  margin: 0;
-  padding: 0;
-}
+var app = new Vue({
+  el: '#app',
+  store,
+  data: {
+    token: csrftoken,
+  },
+  components: {
+    'psd-file-upload': PsdFileUpload,
+    'instance-picker': InstancePicker
+  },
+})
 
-.drag {
-  border: 1px #ababab dashed;
-}
 
-</style>
