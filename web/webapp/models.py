@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
+def save_func(instance, filename):
+    return '{0}_{1}_{2}/{3}'.format(instance.author, instance.work, instance.episode, filename)
+
 # Create your models here.
 class Author(models.Model):
     user = models.ForeignKey(User,
@@ -55,7 +59,7 @@ class PSDFile(models.Model):
     episode = models.ForeignKey(Episode,
                                 on_delete=models.CASCADE,
                                 null=True)
-    psdfile = models.FileField()
+    psdfile = models.FileField(upload_to = save_func)
     w = models.IntegerField(null=True)
     h = models.IntegerField(null=True)
 
@@ -72,11 +76,11 @@ class Cut(models.Model):
                                    related_name='previous_cut',
                                    null=True,
                                    on_delete=None)
-    img_file = models.FileField()
+    img_file = models.TextField()
     x = models.IntegerField()
     y = models.IntegerField()
-    w = models.IntegerField()
-    h = models.IntegerField()
+    #w = models.IntegerField()
+    #h = models.IntegerField()
 
     def __str__(self):
         return self.img_file.name.split('/')[-1]
